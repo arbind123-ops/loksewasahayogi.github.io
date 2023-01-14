@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+    
+    {% block image_block %}
+    <div class="container-fluid my-5">
+
+        <div class='container my-5'>
+             
+            {% if searched %}
+            
+            <h1 style='margin:400px'>you searched for {{searched}}</h1>
+            <br>
+            {% for results in result  %}
+            {{results}}
+            {% endfor %}
+            {% else %}
+            <h1 style='margin:400px'>you forget to search.....</h1>
+            {% endif %}
+        </div>
+
+    </div>
+    {% endblock %}
+</body>
+</html>

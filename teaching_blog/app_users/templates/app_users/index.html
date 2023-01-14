@@ -1,0 +1,271 @@
+{% extends 'base.html' %} 
+{% load static %} 
+{%block title %}index page
+{%endblock%} 
+{% block image_block%}
+<header>
+  <style>
+    .main-content {
+      box-shadow: 10px 11px 143px 41px rgba(64, 64, 97, 0.68);
+      -webkit-box-shadow: 10px 11px 143px 41px rgba(64, 64, 97, 0.68);
+      -moz-box-shadow: 10px 11px 143px 41px rgba(64, 64, 97, 0.68);
+      background-color: none;
+    }
+
+    .carousel-item {
+      height: 100vh;
+      width: 100vw;
+    }
+    img {
+      height: 100vh;
+      width: 100vw;
+      margin-top: 20px;
+    }
+    .card {
+      width: 250px;
+      height: 500px;
+      cursor: pointer;
+      border-radius: 10px;
+    }
+
+    .standard-img {
+      object-fit: cover;
+      height: 250px;
+      width: 250px;
+      border-radius: 10px;
+    }
+    .standard-img:hover {
+      height: 260px;
+      width: 260px;
+      transition: all 0.2s ease-in;
+    }
+    .btn1 {
+      background-color: #8c7ae6;
+    }
+    .btn2 {
+      background-color: #e84118;
+    }
+    
+  </style>
+  <!--Image and mask-->
+
+  <div id="myCarousel" class="carousel slide  " data-bd-slide-to ="true" >
+    <!-- Carousel indicators -->
+    <ol class="carousel-indicators">
+      <li data-bs-target="#myCarousel" data-bs-slide-to="0" class="active"></li>
+      <li data-bs-target="#myCarousel" data-bs-slide-to="1"></li>
+      <li data-bs-target="#myCarousel" data-bs-slide-to="2"></li>
+    </ol>
+
+    <!-- Wrapper for carousel items -->
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img
+          src="/static/Images/note.jpg"
+          class=" w-100 img-fluid"
+          alt="Slide 1"
+        />
+        <div class="carousel-caption d-none d-md-block"></div>
+      </div>
+      <div class="carousel-item">
+        <img
+          src="/static/Images/title.jpg"
+          class=" w-100img-fluid"
+          alt="Slide 2"
+        />
+        
+      </div>
+      <div class="carousel-item">
+        <img
+          src="/static/Images/note.jpg"
+          class="w-100 img-fluid"
+          alt="Slide 3"
+        />
+        
+      </div>
+    </div>
+
+    <!-- Carousel controls -->
+    <a class="carousel-control-prev" href="#myCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" href="#myCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </a>
+  </div>
+</header>
+{%endblock%} {% block content %}
+
+<main class="mt-5">
+  <div class="container main-content">
+    <!-- section 1 for standards-->
+
+    <section class="text-center" >
+      <h3 class="mb-6 font-weight-bold " style="color: #2596be">
+        लोकसेवा सहयोगी <br/> घरमै बसिबसि
+      </h3>
+      <!-- class row for description-->
+      <div class="row d-flex justify-content-center mb-4">
+        <!-- class column -->
+        <div class="col-md-8">
+          <p class="grey-text">
+            लोकसेवा तयारिको लागी आवश्यक पाठ्यसामग्री <br/>हरु परिमार्जित सस्करण सहित उपलब्ध रहेको  
+          </p>
+        </div>
+      </div>
+      <!-- class row2 for cards -->
+      <div class="row">
+        {% for standard in standards %}
+        <div class="col-md-4 d-flex mb-5 justify-content-center">
+          <div class="card text-center" style="width: 25rem">
+            <div class="card-body">
+              <h4 class="card-title" style="color: #ff5722">
+                {{standard.name}}
+              </h4>
+              <img
+                class="standard-img"
+                src="media/{{standard.image_standard}}"
+                class="card-img-top img-fluid"
+                alt="..."
+              />
+              <p class="card-text">{{standard.description|truncatechars:75}}</p>
+              {% if user.is_authenticated %}
+              <a
+                href="{% url 'curriculum:subject_list' slug=standard.slug %}"
+                class="btn btn-primary"
+                style="background-color: #8c7ae6"
+                >let's get started</a
+              >
+              {%else%}
+              <p>Register or login to start learning</p>
+              <a href="{% url 'user_login' %}" class="btn btn-primary btn1"
+                >Login</a
+              >
+              <a href="{% url 'register' %}" class="btn btn-primary btn2"
+                >Register</a
+              >
+              {%endif%}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </section>
+    <hr class="my-5" style="color: #ff5722" />
+    <!-- Section 2: Faculty Members -->
+  </div>
+
+  {% block testinomials %} {% endblock %} 
+  <hr class="my-5" style="color: #ff5722" />
+ 
+
+ <!-- section 3 for activities -->
+{% comment %} 
+  <section class="text-center full-width container-fluid" id="event-section">
+    <h2 class="mb-3 mt-5 font-weight-bold" style="color: #ff5722">
+      Upcoming Events
+    </h2>
+    <div class="row d-flex justify-content-center mb-4">
+      <div class="col-md-8">
+        <p class="text-white">
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi
+          voluptate hic provident nulla repellat facere esse molestiae ipsa
+          labore porro minima quam quaerat rem, natus repudiandae debitis est
+          sit pariatur.
+        </p>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-center mb-4">
+      <!-- col for event 1 -->
+      <div
+        class="card mb-3 mr-5 ml-3"
+        style="max-width: 450px; max-height: 450px"
+      >
+        <img
+          src="https://static.dribbble.com/users/1783758/screenshots/6386088/vinyl-record-and-cover-presentation-mock-up_2x.png"
+          alt="no image found"
+          width="450"
+          height="450"
+        />
+        <div class="event-mask justify-content-center">
+          <div class="row d-flex justify-content-center">
+            <h2 class="font-weight-bold" style="color: #ff5722">
+              About the Event
+            </h2>
+          </div>
+          <div class="row d-flex justify-content-center">
+            <div class="col">
+              <p class="text-white">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi
+                voluptate hic provident nulla repellat facere esse molestiae
+                ipsa labore porro minima quam quaerat rem, natus repudiandae
+                debitis est sit pariatur.
+              </p>
+            </div>
+          </div>
+          <div class="row d-flex justify-content-center">
+            <a
+              href="{% url 'user_login' %}"
+              class="btn btn-primary mb-3"
+              style="background-color: #ff5722"
+              >Get Details</a
+            >
+          </div>
+        </div>
+      </div> {% endcomment %}
+
+      {% comment %} <!--col for event 2  -->
+      <div
+        class="card mb-3 mr-5 ml-3"
+        style="max-width: 450px; max-height: 450px"
+      >
+        <img
+          src="https://c8.alamy.com/comp/2B8C4RC/debate-dialog-communication-and-education-concept-talking-about-political-opinions-two-cardboard-speech-bubbles-2B8C4RC.jpg"
+          alt="no image found"
+          width="450"
+          height="450"
+        />
+        <div class="event-mask">
+          <div class="row d-flex justify-content-center">
+            <h2 class="font-weight-bold" style="color: #ff5722">
+              About the Event
+            </h2>
+          </div>
+          <div class="row d-flex justify-content-center">
+            <div class="col">
+              <p class="text-white">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quasi
+                voluptate hic provident nulla repellat facere esse molestiae
+                ipsa labore porro minima quam quaerat rem, natus repudiandae
+                debitis est sit pariatur.
+              </p>
+            </div>
+          </div>
+          <div class="row d-flex justify-content-center">
+            <a
+              href="{% url 'user_login' %}"
+              class="btn btn-primary mb-3"
+              style="background-color: #ff5722"
+              >Get Details</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- button to get all activities -->
+    <div class="row d-flex justify-content-center mt-5 mb-3">
+      <a
+        href="{% url 'user_login' %}"
+        class="btn btn-primary mb-4"
+        style="background-color: #ff5722"
+        >See All Events</a
+      >
+    </div>
+  </section>
+  
+  <hr class="my-5" style="color: #ff5722" /> {% endcomment %}
+   
+</main>
+
+{%endblock%}
